@@ -31,7 +31,7 @@ namespace HelperFuncs{
 
         double var = ssq / (n - 1);
 
-        return {mean, var, ssq};
+        return {mean, var, ssq, n};
     };
 
 };
