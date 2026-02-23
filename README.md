@@ -2,6 +2,7 @@
 # fastats
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/sleepysnorlax05/fastats/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sleepysnorlax05/fastats/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of fastats is to ...
