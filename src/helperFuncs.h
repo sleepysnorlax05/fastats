@@ -10,6 +10,7 @@ namespace HelperFuncs{
         double mean;
         double variance;
         double sumOfSquares;
+        int n;
     };
 
     /*
@@ -17,6 +18,7 @@ namespace HelperFuncs{
 
     Reference: https://davidma.me/blog/2025/Welfords-Algo/
     */
+
     inline statsResult computeStats(const Rcpp::NumericVector& vec){
         int n = 0;
         double mean = 0.0;
@@ -29,11 +31,16 @@ namespace HelperFuncs{
             ssq += ((vec[i] - mean) * (vec[i] - prev_mean));
         }
 
-        double var = ssq / (n - 1);
+        double var = (n > 1) ? (ssq / (n - 1)) : NAN;
 
-        return {mean, var, ssq, n};
+        HelperFuncs::statsResult res;
+        res.mean = mean;
+        res.variance = var;
+        res.sumOfSquares = ssq;
+        res.n = n;
+
+    return res;
     };
-
 };
 
 #endif // HELPERFUNCS_H
