@@ -19,8 +19,6 @@ context("Welford Online Algorithm") {
         HelperFuncs::statsResult res = HelperFuncs::computeStats(data);
         
         expect_true(res.mean == Approx(7.4));
-        
-        // Catch2 needs a margin for exactly 0.0 comparisons
         expect_true(res.sumOfSquares == Approx(0.0).margin(1e-9));
         expect_true(res.variance == Approx(0.0).margin(1e-9));
     }
