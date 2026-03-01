@@ -11,3 +11,5 @@ GEMINI.md
 
 # VsCode
 .vscode/
+/.quarto/
+**/*.quarto_ipynb
