@@ -1,22 +1,28 @@
 #include "WelchTTest.h"
+#include <Rmath.h>
 
 void WelchTTest::compute() {
     if (is_computed) return;
 
-    HelperFuncs::statsResult res_x = HelperFuncs::computeStats(x);
-    HelperFuncs::statsResult res_y = HelperFuncs::computeStats(y);
+    double mean_diff = mean_x - mean_y;
+    double se = std::sqrt((var_x / n_x) + (var_y / n_y));
 
-    double mean_diff = res_x.mean - res_y.mean;
-    double se = std::sqrt((res_x.variance / x.size()) + (res_y.variance / y.size()));
-    
-    t_statistic = mean_diff / se;
+    t_statistic = (mean_diff - mu) / se;
 
-    double df_num = std::pow((res_x.variance / x.size()) + (res_y.variance / y.size()), 2);
-    double df_den = (std::pow(res_x.variance / x.size(), 2) / (x.size() - 1)) + 
-                    (std::pow(res_y.variance / y.size(), 2) / (y.size() - 1));
+    double df_num = std::pow((var_x / n_x) + (var_y / n_y), 2);
+    double df_den = (std::pow(var_x / n_x, 2) / (n_x - 1)) + 
+                    (std::pow(var_y / n_y, 2) / (n_y - 1));
     degrees_of_freedom = df_num / df_den;
 
-    p_value = 2 * ::Rf_pt(-std::abs(t_statistic), degrees_of_freedom, 1, 0);
+    if (alternative == "two.sided") {
+        p_value = 2 * (1 - R::pt(std::abs(t_statistic), degrees_of_freedom, true, false));
+    } else if (alternative == "greater") {
+        p_value = 1 - R::pt(t_statistic, degrees_of_freedom, true, false);
+    } else if (alternative == "less") {
+        p_value = R::pt(t_statistic, degrees_of_freedom, true, false);
+    } else {
+        Rcpp::stop("Invalid alternative hypothesis. Use 'two.sided', 'greater', or 'less'.");
+    }
 
     is_computed = true;
 }
