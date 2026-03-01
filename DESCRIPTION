@@ -9,12 +9,11 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Suggests: 
-    testthat (>= 3.0.0),
-    xml2
+    testthat,
+    xml2,
 Config/testthat/edition: 3
 LinkingTo: 
-    Rcpp,
-    testthat
+    Rcpp
 Imports: 
     Rcpp,
     testthat
