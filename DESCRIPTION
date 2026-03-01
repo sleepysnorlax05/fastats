@@ -1,9 +1,9 @@
 Package: fastats
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: High-Performance T-Test in R via C++
+Version: 0.1.0.9000
 Authors@R: 
     person("Huy Nhat Minh", "Nguyen", , "huynhatminh.nguyen@connect.qut.edu.au", role = c("aut", "cre"))
-Description: High Performance Statistical Test using Rcpp.
+Description: A comprehensive suite of high-performance t-test methods.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -13,6 +13,8 @@ Suggests:
     xml2,
 Config/testthat/edition: 3
 LinkingTo: 
-    Rcpp
+    Rcpp,
+    RcppArmadillo
 Imports: 
-    Rcpp
+    Rcpp,
+    RcppArmadillo
