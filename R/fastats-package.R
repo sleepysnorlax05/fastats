@@ -1,6 +1,4 @@
 #' @keywords internal
-#' @name fastats-package
-#' @docType package
 #' @aliases fastats-package fastats
 #' @title fastats: High-Performance T-Test Suite
 #' @description A comprehensive suite of high-performance t-test family methods
@@ -8,7 +6,7 @@
 #' exposed to R via Rcpp and R6.
 #' 
 #' @section Core Numerical Policies:
-#' - **Welford’s Algorithm:** Standardized single-pass computation of mean and variance.
+#' - **Welfords Algorithm:** Standardized single-pass computation of mean and variance.
 #' - **RcppArmadillo:** High-performance linear algebra for Hotelling's T2 tests.
 #' - **RNG Discipline:** Bootstrap resampling respects R's global RNG state (set.seed()).
 #' 
@@ -25,4 +23,5 @@
 #' @useDynLib fastats, .registration = TRUE
 #' @importFrom Rcpp sourceCpp
 ## usethis namespace: end
+"_PACKAGE"
 NULL

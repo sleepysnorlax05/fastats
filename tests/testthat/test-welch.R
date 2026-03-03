@@ -5,7 +5,7 @@ test_that("welch_t_test produces correct results", {
   y <- rnorm(100, mean = 4, sd = 1)
   
   # Call your Rcpp wrapper
-  res_fastats <- welch_t_test(x, y)
+  res_fastats <- welch_t_test(x, y, mu = 0, alternative = "two.sided")
   
   # Compare to base R's t.test
   res_base <- t.test(x, y, var.equal = FALSE)

@@ -16,9 +16,6 @@ private:
     double mean_y, var_y;
     int n_y;
 
-    double mu;
-    std::string alternative;
-
     double t_statistic;
     double degrees_of_freedom;
     double p_value;
@@ -28,8 +25,7 @@ public:
     // Constructor
     WelchTTest(const NumericVector& x, const NumericVector& y,
             double mu = 0.0, std::string alternative = "two.sided")
-        : mu(mu), alternative(alternative),
-          t_statistic(NA_REAL), degrees_of_freedom(NA_REAL), p_value(NA_REAL)
+        : BaseClass(alternative, mu), t_statistic(NA_REAL), degrees_of_freedom(NA_REAL), p_value(NA_REAL)
     {
         HelperFuncs::statsResult res_x = HelperFuncs::computeStats(x);
         mean_x = res_x.mean;
