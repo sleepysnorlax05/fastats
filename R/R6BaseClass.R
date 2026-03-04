@@ -1,5 +1,6 @@
+#' @importFrom R6 R6Class
 #' @export
-R6BaseClass <- R6::R6Class("R6BaseClass",
+R6BaseClass <- R6Class("R6BaseClass",
   public = list(
     method = NULL,
     alternative = NULL,
