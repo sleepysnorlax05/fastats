@@ -17,5 +17,4 @@ LinkingTo:
     RcppArmadillo
 Imports: 
     Rcpp,
-    RcppArmadillo,
     R6
