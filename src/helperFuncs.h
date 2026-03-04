@@ -24,11 +24,16 @@ namespace HelperFuncs{
         double mean = 0.0;
         double ssq = 0.0;
 
-        for (int i = 0; i < vec.size(); i ++){
+        auto it = vec.begin();
+        auto end = vec.end();
+
+        for (; it != end; ++it){
             n ++;
+            double val = *it;
+
             double prev_mean = mean;
-            mean += (vec[i] - mean)/n;
-            ssq += ((vec[i] - mean) * (vec[i] - prev_mean));
+            mean += (val - mean)/n;
+            ssq += ((val - mean) * (val - prev_mean));
         }
 
         double var = (n > 1) ? (ssq / (n - 1)) : NAN;
