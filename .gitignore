@@ -13,3 +13,5 @@ GEMINI.md
 .vscode/
 /.quarto/
 **/*.quarto_ipynb
+
+build.sh
