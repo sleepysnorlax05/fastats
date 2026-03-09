@@ -25,9 +25,24 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// paired_t_test
+Rcpp::List paired_t_test(Rcpp::NumericVector x, Rcpp::NumericVector y, double mu, std::string alternative);
+RcppExport SEXP _fastats_paired_t_test(SEXP xSEXP, SEXP ySEXP, SEXP muSEXP, SEXP alternativeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type y(ySEXP);
+    Rcpp::traits::input_parameter< double >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< std::string >::type alternative(alternativeSEXP);
+    rcpp_result_gen = Rcpp::wrap(paired_t_test(x, y, mu, alternative));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_fastats_welch_t_test", (DL_FUNC) &_fastats_welch_t_test, 4},
+    {"_fastats_paired_t_test", (DL_FUNC) &_fastats_paired_t_test, 4},
     {NULL, NULL, 0}
 };
 

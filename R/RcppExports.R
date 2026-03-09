@@ -5,3 +5,7 @@ welch_t_test <- function(x, y, mu = 0.0, alternative = "two.sided") {
     .Call(`_fastats_welch_t_test`, x, y, mu, alternative)
 }
 
+paired_t_test <- function(x, y, mu = 0.0, alternative = "two.sided") {
+    .Call(`_fastats_paired_t_test`, x, y, mu, alternative)
+}
+
