@@ -6,28 +6,29 @@
 \alias{fastats}
 \title{fastats: High-Performance T-Test Suite}
 \description{
-A comprehensive suite of high-performance t-test family methods
-(classical, robust, bootstrapped, and multivariate) implemented in C++ and
-exposed to R via Rcpp and R6.
+A comprehensive, highly optimized suite of t-test family methods
+(classical, robust, bootstrapped, and multivariate) for R. The package is built
+on a C++ core via Rcpp, prioritizing raw computational speed and strict numerical stability.
 }
-\section{Core Numerical Policies}{
+\section{Numerical Architecture}{
 
+The fastats C++ backend enforces several stringent numerical policies:
 \itemize{
-\item \strong{Welfords Algorithm:} Standardized single-pass computation of mean and variance.
-\item \strong{RcppArmadillo:} High-performance linear algebra for Hotelling's T2 tests.
-\item \strong{RNG Discipline:} Bootstrap resampling respects R's global RNG state (set.seed()).
+\item \strong{Welford's Algorithm:} A standard, single-pass mathematical engine is used for all mean and variance computations. This prevents catastrophic cancellation during moment calculations and maintains an $O(1)$ memory footprint, essential for high-throughput streaming calculations.
+\item \strong{RcppArmadillo Integration:} Leverages highly optimized linear algebra solvers for covariance matrices required by tests like Hotelling's T2.
+\item \strong{Strict RNG Discipline:} C++ level resampling algorithms correctly map to R's global Random Number Generator state, guaranteeing reproducibility under \code{set.seed()}.
 }
 }
 
-\section{Key Features}{
+\section{Core Test Suite}{
 
 \enumerate{
 \item One-sample t-test
 \item Two-sample Student t-test (equal variances)
 \item Two-sample Welch t-test (unequal variances)
-\item Paired t-test (on within-pair differences)
+\item Paired t-test (on within-pair differences natively)
 \item Yuen’s trimmed-mean t-test (robust to outliers)
-\item Bootstrapped t-test (empirical p-values via resampling)
+\item Bootstrapped t-test (empirical p-values via fast resampling)
 \item Hotelling’s T2 test (multivariate equality of mean vectors)
 }
 }
