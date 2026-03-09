@@ -72,6 +72,20 @@ test_that("Paired T-test: error handling for missing/mismatched data", {
   expect_error(paired_t_test(x2, y2), "Insufficient number of observations")
 })
 
+test_that("Paired T-test: handles missing values (NA)", {
+  x <- c(1, 2, NA, 4, 5)
+  y <- c(1, NA, 3, 4, 5)
+  
+  res_fastats <- paired_t_test(x, y)
+  
+  # After removing NA pairs, only (1,1), (4,4), and (5,5) remain.
+  res_base <- t.test(x, y, paired = TRUE, na.action = na.omit)
+  
+  expect_equal(res_fastats$statistic, unname(res_base$statistic), tolerance = 1e-5)
+  expect_equal(res_fastats$df, unname(res_base$parameter), tolerance = 1e-5)
+  expect_equal(res_fastats$p_value, res_base$p.value, tolerance = 1e-5)
+})
+
 test_that("Paired T-test: API output schema contract", {
   x <- rnorm(10)
   y <- rnorm(10)
@@ -82,5 +96,5 @@ test_that("Paired T-test: API output schema contract", {
   expect_equal(res$method, "Paired t-test")
   expect_equal(res$alternative, "two.sided")
   
-  expect_true(all(c("mean of x", "mean of y") %in% names(res$estimate)))
+  expect_true("mean of the differences" %in% names(res$estimate))
 })
