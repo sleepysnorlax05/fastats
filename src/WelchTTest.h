@@ -6,8 +6,6 @@
 #include "baseClass.h"
 #include "helperFuncs.h"
 
-using namespace Rcpp;
-
 class WelchTTest : public BaseClass {
 private:
     double mean_x, var_x;
@@ -25,7 +23,7 @@ private:
 public:
 
     // Constructor
-    WelchTTest(const NumericVector& x, const NumericVector& y,
+    WelchTTest(const Rcpp::NumericVector& x, const Rcpp::NumericVector& y,
             double mu = 0.0, std::string alternative = "two.sided",
             double conf_level = 0.95)
         : BaseClass(alternative, mu, conf_level), t_statistic(NA_REAL), degrees_of_freedom(NA_REAL),
@@ -46,7 +44,7 @@ public:
     void compute() override;
 
     // Get results as a list
-    List getResults() const override;
+    Rcpp::List getResults() const override;
 
     // Destructor
     virtual ~WelchTTest() = default;

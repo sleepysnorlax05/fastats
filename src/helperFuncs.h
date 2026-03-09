@@ -6,6 +6,23 @@
 
 namespace HelperFuncs{
 
+    struct Accumulate {
+        int n = 0;
+        double mean = 0.0;
+        double ssq = 0.0;
+
+        inline void add(double val){
+            n ++;
+            double prev_mean = mean;
+            mean += (val - mean)/n;
+            ssq += ((val - mean) * (val - prev_mean));
+        }
+
+        inline double variance() const {
+            return (n > 1) ? (ssq / (n - 1)) : NAN;
+        }
+    };
+
     struct statsResult {
         double mean;
         double variance;
@@ -20,31 +37,18 @@ namespace HelperFuncs{
     */
 
     inline statsResult computeStats(const Rcpp::NumericVector& vec){
-        int n = 0;
-        double mean = 0.0;
-        double ssq = 0.0;
+        Accumulate stat;
 
         auto it = vec.begin();
         auto end = vec.end();
 
-        for (; it != end; ++it){
-            n ++;
-            double val = *it;
-
-            double prev_mean = mean;
-            mean += (val - mean)/n;
-            ssq += ((val - mean) * (val - prev_mean));
+        for (; it != end; ++it) {
+            if (!Rcpp::NumericVector::is_na(*it)){
+                stat.add(*it);
+            }
         }
 
-        double var = (n > 1) ? (ssq / (n - 1)) : NAN;
-
-        HelperFuncs::statsResult res;
-        res.mean = mean;
-        res.variance = var;
-        res.sumOfSquares = ssq;
-        res.n = n;
-
-    return res;
+        return {stat.mean, stat.variance(), stat.ssq, stat.n};
     };
 };
 
