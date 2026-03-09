@@ -54,8 +54,7 @@ Rcpp::List PairedTTest::getResults() const {
     if (!is_computed) Rcpp::stop("Results not computed yet. Call compute() first.");
 
     Rcpp::NumericVector estimate = Rcpp::NumericVector::create(
-        Rcpp::Named("mean of x") = mean_diff + mu,
-        Rcpp::Named("mean of y") = mu
+        Rcpp::Named("mean of the differences") = mean_diff
     );
 
     Rcpp::NumericVector ci = Rcpp::NumericVector::create(conf_lower, conf_upper);
