@@ -8,11 +8,19 @@ class BaseClass {
 protected:
     bool is_computed = false;
 
+    std::string alternative;
+    double mu;
+    double conf_level;
+
 public:
+    BaseClass(const std::string& alt, double mu_val, double conf_level_val)
+        : alternative(alt), mu(mu_val), conf_level(conf_level_val) {}
+
     virtual ~BaseClass() = default;
 
     virtual void compute() = 0;
     virtual Rcpp::List getResults() const = 0;
+
     bool isComputed() const {
         return is_computed;
     }
