@@ -50,11 +50,7 @@ print(results$p_value)
 ## Architecture
 
 The package follows a strict three-layer "bridge" pattern:
+
 - **C++ Core:** Abstract Base Classes (ABC) and header-only math helpers in `src/`.
 - **Rcpp Bridge:** Minimal wrappers in `src/rcpp_wrappers.cpp`.
-- **R Interface:** Functional API and R6 OOP API in `R/`.
-
----
-
-**Project Lead:** Huy Nhat Minh Nguyen  
-**Project Status:** In Development
+- **R Interface:** Functional R6 OOP in `R/`.
