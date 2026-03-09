@@ -19,10 +19,14 @@ void PairedTTest::compute(){
     }
 
     mean_diff = diff_stat.mean;
+    int effective_n = static_cast<int>(diff_stat.n);
+    if (effective_n < 2) {
+        Rcpp::stop("Insufficient number of non-missing paired observations.");
+    }
     var_diff = diff_stat.variance();
-    std_error = std::sqrt(var_diff / n);
+    std_error = std::sqrt(var_diff / effective_n);
     t_statistic = (mean_diff - mu) / std_error;
-    degrees_of_freedom = n - 1;
+    degrees_of_freedom = effective_n - 1;
     
     if (alternative == "two.sided") {
         p_value = 2 * (1 - R::pt(std::abs(t_statistic), degrees_of_freedom, 1, 0));
