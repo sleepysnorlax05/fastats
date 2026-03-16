@@ -1,0 +1,37 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+
+%\VignetteIndexEntry{Mathematical Foundations & Numerical Architecture}
+%\VignetteEngine{knitr::knitr}
+%\VignetteEncoding{UTF-8}
+
+\title{Mathematical Foundations \& Architecture}
+\author{fastats Authors}
+
+\begin{document}
+\maketitle
+
+\section{Numerical Stability Challenges}
+
+Standard implementations of sample variance often rely on a naive sum of squares approach ($ \sum x^2 - \frac{(\sum x)^2}{n} $), which is highly prone to catastrophic cancellation when dealing with large datasets or floating-point numbers clustered tightly around a non-zero mean. 
+
+To circumvent this, \texttt{fastats} does not use the standard two-pass approaches for sample mean and variance calculation.
+
+\section{Welford's Online Algorithm}
+
+At the C++ core, \texttt{fastats} implements Welford's Online Algorithm. This algorithm computes the mean and sum of squared differences sequentially in a single pass over the numeric vector.
+
+For the $k$-th element, the recurring relationships are:
+
+\begin{align}
+  \bar{x}_k &= \bar{x}_{k-1} + \frac{x_k - \bar{x}_{k-1}}{k} \\
+  M_k &= M_{k-1} + (x_k - \bar{x}_{k-1})(x_k - \bar{x}_k)
+\end{align}
+
+The sample variance is then robustly extracted as $\frac{M_k}{n - 1}$.
+
+\subsection{Missing Data Extrapolation}
+
+In functions like \texttt{paired\_t\_test()}, missing values (\texttt{NA}) are natively skipped entirely in-place. Because Welford's Algorithm is single-pass online, the counter $k$ only successfully iterates when both observations in the $x_i$ and $y_i$ pair evaluate to valid numerics. This zero-allocation filter eliminates the need for functions like \texttt{na.omit()} caching new vector subsets into memory.
+
+\end{document}

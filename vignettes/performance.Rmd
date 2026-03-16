@@ -1,0 +1,40 @@
+---
+title: "Performance Benchmarking fastats"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Performance Benchmarking fastats}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+Because `fastats` computes statistics using zero-allocation single-pass inline C++ loops, it circumvents R’s garbage collector (GC) completely during calculation phases. This vignette benchmarks `fastats` against standard `t.test()` operations using `bench`.
+
+## Benchmarking Setup
+
+```{r data-generation}
+library(fastats)
+
+if (requireNamespace("bench", quietly = TRUE)) {
+  set.seed(42)
+  x_large <- rnorm(1e6, mean = 5, sd = 2)
+  y_large <- rnorm(1e6, mean = 4, sd = 1)
+  
+  results_welch <- bench::mark(
+    Base_R = t.test(x_large, y_large, var.equal = FALSE),
+    fastats = welch_t_test(x_large, y_large, mu = 0, alternative = "two.sided"),
+    check = FALSE,
+    iterations = 100
+  )
+  
+  print(results_welch[, c("expression", "min", "median", "mem_alloc", "n_gc")])
+}
+```
