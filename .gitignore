@@ -14,4 +14,4 @@ GEMINI.md
 /.quarto/
 **/*.quarto_ipynb
 
-build.sh
+build.R
